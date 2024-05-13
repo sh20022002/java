@@ -1,28 +1,47 @@
+
 package java;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+
 
 public class Graph {
     String start;
-    List<String> nodes;
-    List<Edge> edges;
+    ArrayList<String> nodes;
+    ArrayList<Edge> edges;
 
     public Graph(String start) {
         this.start = start;
         this.nodes = new ArrayList<>();
         this.edges = new ArrayList<>();
     }
+
     public void addEdge(String from, String to, double weight){
         edges.add(new Edge(from, to, weight));
+        Collections.sort(edges);
     }
 
-    
+    public void addNode(String node){
+        nodes.add(node);
+        Collections.sort(nodes);
+    }
+    public  Graph adjacencyMatrixToGraph(ArrayList<ArrayList<Double>> arr, ArrayList<String> keys){
+        for(int j = 0; j < arr.size(); j++ ){
+            this.addNode(keys.get(j));
+            for(int i = 0; i < arr.get(j).size(); i++ ){
+                if(arr.get(j).get(i) != Double.POSITIVE_INFINITY && i != j){
+                    this.addEdge(keys.get(j), keys.get(i), arr.get(j).get(i));
+                }
+            }
 
-    class Edge {
+        }
+        return this;
+    }
+
+    class Edge implements Comparable<Edge> {
         String from;
         String to;
         double weight;
-        
+    
 
         public Edge(String from, String to, double weight){
             this.from = from;
@@ -30,23 +49,12 @@ public class Graph {
             this.weight = weight;
         }
 
-    
-    }
-
-    
-    public Graph convertAddjacncyToGraph(ArrayList<ArrayList<Double>> arr, ArrayList<String> keys, String type){
-        // accepts addjacany metrix and an arry of keys with the name of the nodes as the values and orderd in accordencs with 
-        // the indexes of the metrix
-        // returns the graph object
-        
-        for(int line = 0; line < arr.size(); line++){
-            this.nodes.add(keys.get(line));
-            for(int index = 1; index < arr.get(line).size(); index ++){
-                this.addEdge(keys.get(line), keys.get(index), arr.get(line).get(index));
-            }
-
+        @Override
+        public int compareTo(Edge other) {
+            return this.from.compareTo(other.from);
         }
-        return this;
-
+    }
+    public static void kosarajusAlgorithm (Graph graph){
+        
     }
 }
