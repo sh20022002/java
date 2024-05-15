@@ -66,21 +66,24 @@ public class Graph {
     
     public static void kosarajusAlgorithm(Graph graph){
             ArrayList<Boolean> prev = new ArrayList<Boolean>(graph.nodes.size());
+            
             Arrays.fill(prev, Boolean.FALSE);
             private void dfs (Graph graph, ArrayList<Boolean> prev){
-                Stack<Edge> s= new Stack<Edge>();
+                int counter = graph.nodes.size() - 1;
+                Stack<String> s= new Stack<String>();
                 for(int i = 0; i < graph.nodes.size(); i++){
-                    String node = graph.nodes.get(i);
-                    for(int e = 0; e < graph.edges.size(); e++){
-                        if(graph.edges.get(e).from == node){
-                            s.push(graph.edges.get(e));
-                        }
-                    }
+                    s.push(graph.nodes.get(i));
                 }
-                while (!s.isEmpty()) {
-                    Edge current = s.pop();
-                    if(!this.visted(graph, prev, current.to)){
-
+                while (!s.isEmpty() && counter >= 0){
+                    String current = s.pop();
+                    if(this.visted(graph, prev, current)){
+                        prev.set(counter, Boolean.TRUE);
+                        counter --;
+                    }else{
+                        for(int e = 0; e < graph.edges.size(); e++){
+                            // needs to be used differen because needed a way to continue accessing the next node untill the edge is leading to
+                            // a visted node
+                        }
                     }
                     
                 } 
